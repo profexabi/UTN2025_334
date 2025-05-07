@@ -1,11 +1,3 @@
-# UTN2025_334 :books:
-Repositorio de la TUP UTN 2025, Comision 334
-
-## JavaScript III / Scope y ambito, funciones, tipos, parametros y argumentos
-
-## JavaScript II / Estructuras de control de flujo
-
-```js
 //////////////////////////////////////
 // JavaScript II: Control de Flujo //
 // Estructuras de control de flujo (condicionales, bucles, control de flujo avanzado)
@@ -366,4 +358,3 @@ switch(diaSemana) {
     default:
         console.log("Fin de semana");
 }
-```
