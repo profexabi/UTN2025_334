@@ -1,8 +1,42 @@
 # UTN2025_334 :books:
 Repositorio de la TUP UTN 2025, Comision 334
 
+---
+#### [Link clase JavaScript V + VI / 19/05/25](https://www.youtube.com/watch?v=Utsti9-cd-M)
+
+## JavaScript VI / Manipulacion del DOM en JavaScript y eventos
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mi pagina</title>
+    </head>
+
+    <body>
+        <h1>Bienvenidos</h1>
+        <p>Esto es un parrafo</p>
+    </body>
+</html>
+
+<!-- Diagrama de arbol del DOM
+    - document
+        - html
+                - head
+                    - title
+                -body
+                    - h1
+                    - p
+-->
+```
+
+---
+## JavaScript V
 ## JavaScript V / Objetos, clases y objetos globales. Almacenamiento persistente. Iteracion en arrays, objetos y arrays de objetos
 ```js
+////////////////////
+// JavaScript V //
+// Objetos, clases y objetos globales. Almacenamiento persistente. Iteracion en arrays, objetos y arrays de objetos
+
 ////////////////////
 // JavaScript V //
 // Objetos, clases y objetos globales. Almacenamiento persistente. Iteracion en arrays, objetos y arrays de objetos
@@ -507,7 +541,308 @@ Creen un array de objetos que represente una lista de productos, cad auno con pr
     - .filter() para obtener solo los productos con stock disponibles
     - .reduce() para obtener el valor del inventario
 */
+
+
+
+// Repaso y profundización de iteracion de estructuras de datos en JavaScript
+
+/* for tradicional
+    - Ventajas: Maximo control, podemos usar break y continue. Mayor rendimiento (mas rapido)
+    - Desventajas: Mas verboso (más complejo de leer)
+*/
+
+
+/* forEach()
+
+array.forEach((elemento, indice, arrayOriginal) => {
+    console.log(elemento, indice);
+});
+
+    - Ventajas: Sintaxis limpia (facil de leer), no necesita contador
+    - Desventajas: No se puede romper el bucle con break
+*/
+
+// Modificar un array externo
+const numeros3 = [1, 2, 3];
+const dobles = [];
+
+numeros3.forEach(num => dobles.push(num * 2));
+console.log(dobles);
+
+// Actualizar propiedades
+const estudiantes2 = [
+    { nombre: "Candela", nota: 8 },
+    { nombre: "Kevin", nota: 6 },
+    { nombre: "Ignacio", nota: 9 }
+];
+
+estudiantes2.forEach(estudiante => {
+    estudiante.aprobado = estudiante.nota >= 7;
+});
+
+console.log(estudiantes2);
+
+
+/* map()
+
+const nuevosValores = array.map(elemento => elemento * 2);
+
+    - Proposito: Transformar cada elemento
+    - Retorna: Nuevo array con los resultados
+*/
+
+// Crear un array de cuadrados
+const nums = [1, 2, 3, 4];
+const cuadrados = nums.map(num => num * num);
+console.log(cuadrados);
+
+// Convertir a strings
+const edades = [25, 30, 18];
+const edadesStr = edades.map(edad => `Tengo ${edad} años`);
+console.log(edadesStr);
+
+// Extraer propieades
+const empleados = [
+    { id: 1, nombre: "Candela", departamento: "Canelones" },
+    { id: 2, nombre: "Kevin", departamento: "Montevideo" },
+    { id: 3, nombre: "Ignacio", departamento: "Punta del Este" }
+];
+
+const nombresEmpleados = empleados.map(emp => emp.nombre);
+console.log(nombresEmpleados);
+
+
+/* filter()
+
+const filtrados = array.filter(elemento => elemento > 10)
+
+    - Proposito: Seleccionar elementos que cumplan una condicion
+    - Retorna: Nuevo array con elementos filtrados
+*/
+
+// Filtrar numeros pares
+const numeros4 = [1, 2, 3, 4, 5, 6];
+const pares4 = numeros4.filter(num => num % 2 === 0);
+console.log(pares4);
+
+// Filtrar strings largos
+const palabras = ["hola", "adios", "bienvenido", "ok"];
+const palabrasLargas = palabras.filter(palab => palab.length > 4);
+console.log(palabrasLargas);
+
+// Filtrar por propiedad
+const personas2 = [
+    { nombre: "Candela", edad: 25 },
+    { nombre: "Kevin", edad: 17 },
+    { nombre: "Ignacio", edad: 30 }
+];
+
+const mayores = personas2.filter(persona => persona.edad >= 18);
+console.log(mayores);
+
+// Filtrar multiples condiciones
+const ordenes = [
+    { productoId: 101, nombre: "Laptop", precio: 100000, cantidad: 1, completada: true },
+    { productoId: 202, nombre: "Teclado", precio: 15000, cantidad: 3, completada: true  },
+    { productoId: 103, nombre: "Mouse", precio: 10000, cantidad: 4, completada: false  }
+];
+
+const ordenesMultiplesCompletadas = ordenes.filter(orden => {
+    return orden.completada && orden.cantidad > 1
+});
+
+console.log(ordenesMultiplesCompletadas);
+
+
+/* reduce()
+
+const suma = array.reduce((acumulador, elemento) => acumulador + elemento, 0)
+
+    - Proposito: Reducir el array a un unico valor
+    - Retorna: Valor acumulado
+*/
+
+// Sumar elementos
+const numeros5 = [10, 20, 30];
+const suma5 = numeros5.reduce((acum, num) => acum + num, 0);
+console.log(suma5);
+
+// Concatenar strings
+const palabras2 = ["Hola", "mundo", "JavaScript"];
+const frase = palabras2.reduce((acum, palabra) => acum + " " + palabra);
+console.log(frase);
+
+// Arrays de objetos
+const ventas = [
+    { productoId: 101, nombre: "Laptop", precio: 100000, cantidad: 1, completada: true },
+    { productoId: 202, nombre: "Teclado", precio: 15000, cantidad: 3, completada: true  },
+    { productoId: 103, nombre: "Mouse", precio: 10000, cantidad: 4, completada: false  }
+];
+
+const totalVentas = ventas.reduce((total, item) => total + (item.cantidad * item.precio), 0);
+
+console.log(totalVentas);
+
+
+/* find() y findIndex()
+
+const encontrado = array.find(elemento => elemento.id === 123);
+const indice = array.findIndex(elemento => elemento.id === 123);
+
+    - Proposito: Buscar el primer elemento que cumpla una condicion
+    - Retorna: El elemento (find) o el indice (findIndex)
+*/
+
+// Buscar numero
+const numeros6 = [5, 12, 8, 130, 44];
+const encontrado = numeros6.find(num => num > 10);
+console.log(encontrado);
+
+const indice = numeros6.findIndex(num => num > 100);
+console.log(indice);
+
+//Buscar un objeto por propiedad
+const usuarios2 = [
+    { id: 1, nombre: "Candela", activo: true },
+    { id: 2, nombre: "Kevin", activo: false },
+    { id: 3, nombre: "Ignacio", activo: true }
+];
+
+const usuarioActivo = usuarios2.find(usuario => usuario.activo);
+console.log(usuarioActivo);
+
+const tareas = [
+    { id: 1, descripcion: "Comprar fideos", completada: false },
+    { id: 2, descripcion: "Estudiar JavaScript", completada: true },
+    { id: 3, descripcion: "Andar en bici", completada: false }
+];
+
+const indiceTarea = tareas.findIndex(tarea => tarea.completada);
+console.log(indiceTarea);
+
+
+/* for ... of
+
+for(const elemento of array) {
+    console.log(elemento);
+    if(elemento === "stop") {
+        break;
+    }
+}
+
+    - Ventajas: Sintaxis limpia, permite break/continue
+    - Desventajas: No provee indice automatico
+*/
+
+const simbolos = ['€', '$', '¥', '£'];
+for(const simbolo of simbolos) {
+    console.log(simbolo);
+    if( simbolo === '¥') break;
+}
+
+
+// Iterar objetos
+const empleados2 = [
+    { id: 1, nombre: "Candela", salario: 3000 },
+    { id: 2, nombre: "Kevin", salario: 3500 },
+    { id: 3, nombre: "Ignacio", salario: 4000 }
+];
+
+for(const empleado of empleados2) {
+    if(empleado.salario > 3500) {
+        console.log(`${empleado.nombre} gana mas de 3500`);
+        break;
+    }
+}
+
+
+// Iteracion en objetos
+// Iterando claves de objetos con for...in
+const estudiante3 = {
+    nombre: "Joaquin",
+    edad: 30,
+    curso: "JavaScript"
+};
+
+for(const propiedad in estudiante3) {
+    console.log(`${propiedad}: ${estudiante3[propiedad]}`);
+}
+
+// Object.keys() para obtener claves
+const claves2 = Object.keys(estudiante3);
+console.log(claves2);
+claves2.forEach(clave => console.log(clave));
+
+// Object.values() para obtener valores
+const valores2 = Object.values(estudiante3);
+console.log(valores2);
+valores2.forEach(valor => console.log(valor));
+
+// Object.entries() para obtener pares clave-valor
+for(const [clave, valor] of Object.entries(estudiante3)) {
+    console.log(`${clave}: ${valor}`);
+}
+
+
+/* Metodos de comparacion con some() y every()
+
+const algunoCumple = array.some(elemento => elemento > 0);
+const todosCumples = array.every(elemento => elemento > 0);
+
+    Proposito: Verificar si algunos/todos cumplen la condicion
+    Retorna: Booleano
+*/
+
+// Verificar si hay numeros pares
+const numeros7 = [1, 3, 5, 7, 8];
+const hayPares  = numeros7.some(num => num % 2 === 0);
+console.log(hayPares);
+
+// Verificar si son todos positivos
+const todosPositivos = numeros7.every(num => num > 0);
+console.log(todosPositivos);
+
+// Verificar si hay usuarios admin
+const usuarios3 = [
+    { id: 1, nombre: "Candela", salario: 3000, rol: "user" },
+    { id: 2, nombre: "Kevin", salario: 3500, rol: "admin" },
+    { id: 3, nombre: "Ignacio", salario: 4000, rol: "user" }
+];
+
+const existeAdmin = usuarios3.some(user => user.rol === "admin");
+console.log(existeAdmin);
+
+
+
+// Verificar si todos aprobaron
+const estudiantes3 = [
+    { nombre: "Candela", nota: 8 },
+    { nombre: "Kevin", nota: 6 },
+    { nombre: "Ignacio", nota: 9 }
+];
+
+const todosAprobaron = estudiantes3.every(estudiante => estudiante.nota >= 7);
+console.log(todosAprobaron);
+
+/*  Comparacion de rendimiento
+
+        1. Bucles clasicos (for, while) son los mas rapidos
+        2. Metodos funcionales (map, filter) son mas lentos pero mas expresivos
+        3. for...of ofrece un buen equilibrio entre rendimiento y legibilidad
+
+    Recomendaciones de uso
+
+        - Transformar un array: map()
+        - Filtrar elementos: filter()
+        - Reducir a un valor: reduce()
+        - Buscar elemento: find() o findIndex()
+        - Para romper un bucle: for o for...of
+        - No necesitamos romper un bucle: forEach()
+        - Verificar condiciones: some() o every()
+*/
 ```
+
+---
 
 ## JavaScript IV / Introduccion a arrays y objetos. Metodos de strings y arrays
 ```js
@@ -736,6 +1071,8 @@ console.log([1, 2, 2, 3, 4, 5, 6, 2, 4, 3, 1].sort().reverse());
 console.log(["b", "c", "a", "j", "k" ,"z"].sort().reverse());
 
 ```
+
+---
 
 ## JavaScript III / Scope y ambito, funciones, tipos, parametros y argumentos
 ```js
@@ -1127,6 +1464,8 @@ setTimeout(function() {
 const sumar3 = (a, b) => a + b;
 console.log(sumar3(5, 6));
 ```
+
+---
 
 ## JavaScript II / Estructuras de control de flujo
 
