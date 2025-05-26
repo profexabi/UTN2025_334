@@ -78,3 +78,106 @@ document.body.appendChild(nuevoParrafo);
 - Nos pidieran crear elementos con texto o atributos de forma segura: createElement + appendChild  (técnicamente y estrictamente es la forma más segura de manipular el DOM)
 */
 
+
+//////////////
+// Eventos //
+/* 
+Permiten a los desarrolladores detectar interacciones del usuarios con la pagina web, como hacer click en un boton, mover el mouse, escribir en un campo de texto etc.
+
+Qué es un evento? Es una señal que se envía cuando ocurre una interacción o cambio en el documento, como un click, o una pulsación de tecla.
+JavaScript nos permite escuchar (registrar) esos eventos y ejecutar funciones especificas cuando ocurren
+*/
+
+// Llamamos al elemento que va a estar escuchando (registrando) esa interaccion
+// let boton = document.getElementById("boton");
+boton.addEventListener("click", function() {
+    console.log("Hiciste click! epa!");
+});
+
+
+/* Tipos comunes de eventos
+
+- Eventos de mouse: click, dblclick, mouseover, mouseout, mousemove
+
+- Eventos de teclado: keydown, keyup y keypress
+
+- Eventos de formulario: submit, change, input, focus
+
+- Eventos de ventana: resize, scroll, load unload
+*/
+
+let input = document.getElementById("input");
+
+// Hacemos que nuestro input escuche eventos de pulsacion de tecla
+// Necesitamos incluir event en nuestra funcion cuando vamos a usar informacion sobre el evento
+input.addEventListener("keydown", function(event) { // El objeto event contiene todos los datos del evento que ocurrio (que tecla se presiono, que boton hico click, etc)
+    console.log(`Tecla presionada: ${event.key}`);
+    console.log(`Codigo fisico: ${event.code}`);
+
+    if(event.key === "Escape") {
+        alert("A donde te escapas, cobarde!");
+    }
+});
+
+/* Propagacion de eventos
+
+Cuando ocurre un evento, este se propaga a atraves del DOM en dos fases:
+
+- Fase de captura (de arriba para abajo)
+- Fase de burbuja (de abajo para arriba)
+
+Podemos detener la propagacion de un evento usando el metodo event.stopPropagation()
+*/
+
+let padre = document.getElementById("padre");
+let hijo = document.getElementById("hijo");
+
+// Escuchamos el click en el div padre
+padre.addEventListener("click", function() {
+    console.log("Se hizo click en el div padre");
+});
+
+// Escuchamos el click en el button hijo
+hijo.addEventListener("click", function(event) {
+    event.stopPropagation(); // Detiene la propagacion
+    console.log("Se hizo click en el boton hijo");
+});
+
+
+let formulario = document.getElementById("formulario");
+
+// Evitamos que el formulario se envie (por defecto); event.preventDefault()
+formulario.addEventListener("submit", function(event) {
+    event.preventDefault();
+    console.log("El formulario no se envió!");
+});
+
+/* Ejercicio en clase
+
+1. Seleccionar los 3 elementos
+
+2. Añadir evento click al boton
+
+    3. Que este evento click cambie el texto del titulo
+    4. Que este evento click cambie el contenido HTML del parrafo <strong>Contenido modificado y en negritaaaaa!!!!</strong>
+    5. Que este evento click cambie el color del boton
+*/
+
+let boton2 = document.getElementById("boton2");
+let titulo2 = document.getElementById("titulo2");
+let parrafo2 = document.getElementById("parrafo2");
+
+boton2.addEventListener("click", cambiarEstilos);
+
+function cambiarEstilos() {
+
+    // Consigna 1
+    titulo2.textContent = "Boca el más grande (llanto de emocion)";
+
+    // Consigna 2
+    parrafo2.innerHTML = "<strong>Contenido modificado y en negritaaaaaaaaaaaa!!!!!!!!!</strong>";
+
+
+    // Consigna 3
+    boton2.style.backgroundColor = "yellow";
+}

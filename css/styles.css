@@ -6,3 +6,9 @@ body {
     background-color: #010409;
     color: white;
 }
+
+#padre {
+    background: green;
+    padding: 10px;
+    border-radius: 5px;
+}
