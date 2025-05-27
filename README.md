@@ -3,7 +3,7 @@ Repositorio de la TUP UTN 2025, Comision 334
 
 ---
 
-#### [Link clase JavaScript VI parte 2]()
+#### [Link clase JavaScript VI parte 2](https://youtu.be/8fQcJP5wPt4)
 
 #### [Link clase JavaScript V + VI / 19/05/25](https://www.youtube.com/watch?v=Utsti9-cd-M)
 
@@ -219,7 +219,7 @@ function cambiarEstilos() {
 ```
 
 ---
-## JavaScript V
+
 ## JavaScript V / Objetos, clases y objetos globales. Almacenamiento persistente. Iteracion en arrays, objetos y arrays de objetos
 ```js
 ////////////////////
