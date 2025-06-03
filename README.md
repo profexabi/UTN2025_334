@@ -3,6 +3,8 @@ Repositorio de la TUP UTN 2025, Comision 334
 
 ---
 
+#### [Link clase JavaScript simulacro parcial II](https://youtu.be/3rP-dWXVkbA)
+
 #### [Link clase JavaScript VI parte 2](https://youtu.be/8fQcJP5wPt4)
 
 #### [Link clase JavaScript V + VI / 19/05/25](https://www.youtube.com/watch?v=Utsti9-cd-M)
