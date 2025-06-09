@@ -3,6 +3,12 @@ Repositorio de la TUP UTN 2025, Comision 334
 
 ---
 
+## [JavaScript VII]()
+```js
+
+
+```
+
 #### [Link clase JavaScript simulacro parcial II](https://youtu.be/3rP-dWXVkbA)
 
 #### [Link clase JavaScript VI parte 2](https://youtu.be/8fQcJP5wPt4)
@@ -218,6 +224,25 @@ function cambiarEstilos() {
     // Consigna 3
     boton2.style.backgroundColor = "yellow";
 }
+
+/* Consigna para el parcial
+
+Tener una pagina HTML minimamente estilada. Esta va a ser la estructura a la que vamos a volcar nuestro HTML dinamico
+
+Un <header> que se divida en 3 secciones
+    - Un logo
+    - Un input type text
+    - un div con clase carrito
+
+Un <main> con flex en columna con dos <section>
+    - un <section> con id seccion-productos
+        - este debe tener un h2 con titulo mis productos y un div con id contenedor-productos
+
+    - un <section> con id seccion-carrito
+        - este debe tener un h2, un div id items-carrito y un div id total-carrito
+
+Estilado minimo pero maquetacion con flex, queremos dibujar la estructura a la que volcarle nuestro HTML dinamico con JavaScript usando DOM
+*/
 ```
 
 ---

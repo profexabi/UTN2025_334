@@ -1,202 +1,349 @@
-////////////////////
-// JavaScript VI //
-// Manipulacion del DOM en JavaScript y eventos
+/////////////////////
+// JavaScript VII //
+// High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks y web APIs
 
-/* Como funciona la manipulacion del DOM?
 
-    - Con JavaScript podemos acceder y modificar cualquier elemento del DOM utilizando el objeto global document
-    - Podemos:
-        - Modificar el contenido
-        - Añadir o eliminar elementos del DOM
-        - Escuchar eventos de usuario (clicks, teclados, etc)
+///////////////////////////
+// High order functions //
+/*
+Las HOF o Funciones de orden superior son funciones que pueden hacer al menos una de estas dos cosas
+
+1. Recibir una o mas funciones como argumentos
+2. Devolver una funcion como resoltado
+
+Las HOF operan sobre otras funciones, ya sea tomandolas como parmetros o retornandolas. JavaScript le da una importancia primaria a las funciones, considerandolas `ciudadanos de primera clase`, `first-class citizens`, lo que significa que podemos hacer de todo, asignar funciones a variables, apsarlas como argumentos o retornarlas desde otras funciones.
+
+
+Por que usar funciones de orden superior?
+
+- Abstraccion: Permiten escribir codigo mas abstracto y reutilizable
+
+- Composicion: Facilitar combinar funcionaliades pequeñas en lógicas más complejas
 */
 
+// 1. Aceptando una funcion como argumento
 
-///////////////////////////////////////
-// Seleccion de elementos en el DOM //
+// Funcion de alto nivel que acepta un callback
+function funcionAltoNivel(callback) {
+    console.log("Ejecutando una funcion de alto nivel");
 
-// getElementById() -> Selecciona un unico metodo por su ID
+    // Sarasa ...
 
-
-let titulo = document.getElementById("titulo");
-console.log(titulo);
-console.log(titulo.textContent);
-
-// querySelector() -> Seleccionar el PRIMER elemento que coincida con un selector CSS (clase, id, nombre etiqueta)
-let primerParrafo = document.querySelector(".mensaje");
-console.log(primerParrafo.textContent);
-
-// querySelectorAll() -> Selecciona TODOS los elementos que coincidan con el selector CSS y devuelve un array (mas en detalle una NodeList)
-let parrafos = document.querySelectorAll(".mensaje");
-console.log(parrafos);
-
-parrafos.forEach(parrafo => console.log(parrafo.textContent));
-
-// Selectores EXTRA (no recomendados)
-// getElementsByClassName(): Selecciona todos los elementos con una clase especifica
-// getElementsByTagName: Selecciona todos los elementos de un tipo de etiqueta dado
-
-
-//////////////////////////////////////
-// Modificar contenido y atributos //
-
-// textContent: Modifica el texto dentro de un elemento
-let parrafo = document.getElementById("parrafo");
-
-let boton = document.getElementById("boton");
-
-boton.style.backgroundColor = "red"
-boton.setAttribute("id", "nuevoId")
-
-let contenedor = document.getElementById("contenedor");
-
-/*  Crear y eliminar elementos
-
-    - createElement(): Crear un nuevo elemento HTML
-    - appendChild(): Añadir un elemento como hijo de otro
-    - removeChild(): Eliminar un elemento hijo de su nodo padre
-*/
-
-contenedor.innerHTML = `<ul>
-                            <li>Lista 1</li>
-                            <li>Lista 2</li>
-                            <li>Lista 3</li>
-                        </ul>
-`;
-
-// Crear nuevo elemento parrafo y asignarle un texto
-const nuevoParrafo = document.createElement("p");
-nuevoParrafo.textContent = `Soy un parrafo dinamico! Wiii`;
-
-// Insertarlo en el body
-document.body.appendChild(nuevoParrafo);
-
-/* Cuando usar cada uno
-
-- Para insertar codigo HTML de forma rapida y simple: innerHTML (para cuando estemos seguros de que el contenido no es malicioso)
-
-- Nos pidieran crear elementos con texto o atributos de forma segura: createElement + appendChild  (técnicamente y estrictamente es la forma más segura de manipular el DOM)
-*/
-
-
-//////////////
-// Eventos //
-/* 
-Permiten a los desarrolladores detectar interacciones del usuarios con la pagina web, como hacer click en un boton, mover el mouse, escribir en un campo de texto etc.
-
-Qué es un evento? Es una señal que se envía cuando ocurre una interacción o cambio en el documento, como un click, o una pulsación de tecla.
-JavaScript nos permite escuchar (registrar) esos eventos y ejecutar funciones especificas cuando ocurren
-*/
-
-// Llamamos al elemento que va a estar escuchando (registrando) esa interaccion
-// let boton = document.getElementById("boton");
-boton.addEventListener("click", function() {
-    console.log("Hiciste click! epa!");
-});
-
-
-/* Tipos comunes de eventos
-
-- Eventos de mouse: click, dblclick, mouseover, mouseout, mousemove
-
-- Eventos de teclado: keydown, keyup y keypress
-
-- Eventos de formulario: submit, change, input, focus
-
-- Eventos de ventana: resize, scroll, load unload
-*/
-
-let input = document.getElementById("input");
-
-// Hacemos que nuestro input escuche eventos de pulsacion de tecla
-// Necesitamos incluir event en nuestra funcion cuando vamos a usar informacion sobre el evento
-input.addEventListener("keydown", function(event) { // El objeto event contiene todos los datos del evento que ocurrio (que tecla se presiono, que boton hico click, etc)
-    console.log(`Tecla presionada: ${event.key}`);
-    console.log(`Codigo fisico: ${event.code}`);
-
-    if(event.key === "Escape") {
-        alert("A donde te escapas, cobarde!");
-    }
-});
-
-/* Propagacion de eventos
-
-Cuando ocurre un evento, este se propaga a atraves del DOM en dos fases:
-
-- Fase de captura (de arriba para abajo)
-- Fase de burbuja (de abajo para arriba)
-
-Podemos detener la propagacion de un evento usando el metodo event.stopPropagation()
-*/
-
-let padre = document.getElementById("padre");
-let hijo = document.getElementById("hijo");
-
-// Escuchamos el click en el div padre
-padre.addEventListener("click", function() {
-    console.log("Se hizo click en el div padre");
-});
-
-// Escuchamos el click en el button hijo
-hijo.addEventListener("click", function(event) {
-    event.stopPropagation(); // Detiene la propagacion
-    console.log("Se hizo click en el boton hijo");
-});
-
-
-let formulario = document.getElementById("formulario");
-
-// Evitamos que el formulario se envie (por defecto); event.preventDefault()
-formulario.addEventListener("submit", function(event) {
-    event.preventDefault();
-    console.log("El formulario no se envió!");
-});
-
-/* Ejercicio en clase
-
-1. Seleccionar los 3 elementos
-
-2. Añadir evento click al boton
-
-    3. Que este evento click cambie el texto del titulo
-    4. Que este evento click cambie el contenido HTML del parrafo <strong>Contenido modificado y en negritaaaaa!!!!</strong>
-    5. Que este evento click cambie el color del boton
-*/
-
-let boton2 = document.getElementById("boton2");
-let titulo2 = document.getElementById("titulo2");
-let parrafo2 = document.getElementById("parrafo2");
-
-boton2.addEventListener("click", cambiarEstilos);
-
-function cambiarEstilos() {
-
-    // Consigna 1
-    titulo2.textContent = "Boca el más grande (llanto de emocion)";
-
-    // Consigna 2
-    parrafo2.innerHTML = "<strong>Contenido modificado y en negritaaaaaaaaaaaa!!!!!!!!!</strong>";
-
-
-    // Consigna 3
-    boton2.style.backgroundColor = "yellow";
+    callback(); // Llamada a la funcion callback
 }
 
-/* Consigna para el parcial
+function funcionCallback() {
+    console.log("Ejecutando la funcion callback");
+}
 
-Tener una pagina HTML minimamente estilada. Esta va a ser la estructura a la que vamos a volcar nuestro HTML dinamico
+funcionAltoNivel(funcionCallback);
 
-Un <header> que se divida en 3 secciones
-    - Un logo
-    - Un input type text
-    - un div con clase carrito
 
-Un <main> con flex en columna con dos <section>
-    - un <section> con id seccion-productos
-        - este debe tener un h2 con titulo mis productos y un div con id contenedor-productos
+// 2. Funcion de alto nivel que devuelve una funcion
+function crearSaludo(saludo) {
 
-    - un <section> con id seccion-carrito
-        - este debe tener un h2, un div id items-carrito y un div id total-carrito
+    // Devolvemos una nueva funcion
+    return function(nombre) {
+        console.log(`${saludo}, ${nombre}`);
+    }
+}
 
-Estilado minimo pero maquetacion con flex, queremos dibujar la estructura a la que volcarle nuestro HTML dinamico con JavaScript usando DOM
+// Creamos una funcion saludo
+let saludaHolis = crearSaludo("Holis");
+saludaHolis("Gabi");
+
+// Creamos una funcion despedida
+let saludaChau = crearSaludo("Chauchis");
+saludaChau("Joaquin");
+
+
+// 3. Ejempo de abstraccion en una HOF
+// La idea de este ejemplo es promover la reutilizacion del codigo y la abstraccion al permitir que se realicen distintas operaciones
+function ejecutarOperacionArray(array, operacion) {
+    return array.map(operacion);
+}
+
+// Funcion callback que duplica cada elemento en el array
+function dobles(numero) {
+    return numero * 2;
+}
+
+let numeros = [1, 2, 3, 4, 5];
+let numerosDobles = ejecutarOperacionArray(numeros, dobles);
+console.log(numerosDobles);
+
+
+////////////////////////////////////////////////
+// Funciones de orden superior comunes en JS //
+
+// forEach() -> Recorre todos los elementos de un array y ejecuta una funcion sobre cada uno
+
+const nums = [1, 2, 3];
+nums.forEach(function(num) {
+console.log(num * 2);
+});
+// Output: 2, 4, 6
+
+
+// map() -> Crea un array aplicando una funcion a cada elemento de array original
+const alCuadrado = nums.map(x => x ** 2);
+console.log(alCuadrado);
+// Output: [1, 4, 9]
+
+
+// filter() -> Crea un nuevo array con los elementos que cumplen una condicion
+const pares = numeros.filter(n => n % 2 === 0);
+console.log(pares);
+// Output: [2, 4]
+
+
+// reduce() -> Acumula los valores del array en un solo valor, segun una funcion reductora
+const suma = numeros.reduce((acum, actual) => acum + actual, 0);
+console.log(suma);
+
+
+// sort() -> Ordena los elementos de un array segun una funcion de comparacion
+const letras = ['d', 'a', 'c', 'b'];
+letras.sort(); // Orden alfabetico
+console.log(letras)
+
+const numerosRand = [10, 2, 30, 4];
+numerosRand.sort((a, b) => a - b); // Orden numerico ascendente
+console.log(numerosRand);
+
+
+// find() -> Devuelve el primer elemento del array que cumple una condicion
+let frutas = ["manzana", "banana", "pera"];
+let encontrada = frutas.find(f => f.startsWith("b"));
+console.log(encontrada);
+
+
+////////////////////
+// Destructuring //
+/*
+Destructuring o "Desestructuracion" es una sintaxis que permite extraer valores de arrays o propiedades de objetos y asignarlo a variables de forma concisa
+
+Es una forma de "descomponer" estructuras de datos como arrays y objetos en variables individuales para acceder manualmente a cada elemento o propiedad
+
+Por que usar destructuring?
+- Mejora la legibilidad del codigo
+- Facilita el acceso rapido a datos de estructuras complejas
+- Reduce la verbosidad (menos lineas para obtener lo mismo)
 */
+
+let nuevosNumeros = [1, 2, 3];
+let uno = nuevosNumeros[0];
+let dos = nuevosNumeros[1];
+
+// Con destructuring
+let [primero, segundo] = numeros;
+console.log(primero, segundo);
+
+let persona = {nombre: "Santiago", edad: 20};
+let nomPersona = persona.nombre;
+let edadPersona = persona.edad;
+
+let {nombre, edad} = persona;
+console.log(nombre, edad);
+
+// Asignamos a nuevas variables
+let {nombre: n, edad: e} = persona;
+console.log(n, e);
+
+
+// Destructuring con valores por defecto
+let {nom, ciudad = "Oculta"} = {nombre: "Carlos"};
+console.log(ciudad);
+
+
+// Destructuring en parametros de funcion
+function saludar({nombre, edad}) {
+    console.log(`Hola ${nombre} tenes ${edad} años`);
+}
+
+let companero = {nombre: "Matias", edad: 22};
+saludar(companero);
+
+// Destructuring con valores omitidos
+let [prim, , terc] = [10, 20, 30];
+console.log(prim, terc);
+
+
+// Rest operator con destructuring
+// En arrays
+let [a, ...resto] = [1, 2, 3, 4];
+console.log(a);
+console.log(resto);
+
+// En objetos
+let {nomb, ... otros} = {nomb: "Matias", edad: 22, pais: "Argentina"};
+console.log(nomb);
+console.log(otros);
+
+
+//////////////////////
+// Spread operator //
+/*
+Operador de propagacion o spread operator, es una sintaxis introducida por ES6, que permite descomponer elementos iterables (como arrays, strings y objetos) en elementos individuales.
+
+El objetivos es copiar, combinar o expandir estructuras de datos de forma eficiente
+
+El spread operator trabaja a nivel de valores individuales extrayendo cada elemento en un iterable y colocandolos en el contexto donde se usa.
+
+Cuando el interprete de JavaScript (el navegador en este caso) encuentra ...iterable, automaticamente
+
+    1. Convierte el iterable en una secuencia de valores individuales
+
+    2. Propaga (spread) esos valores en el nuevo contexto (array, objeto, llamada a funcion, etc)
+
+    3. No modifica el original
+
+
+El spread operator nos permite
+- Manipulacion de arrays (copiar y concatenar)
+- Combinacion de objetos (inmutabilidad y mezcla de propiedades)
+
+*/
+
+// Copia superficial: Los cambios en copia no afectan al original, si hay objetos anidados, si se referencian
+let original = [1, 2, 3];
+let copia = [...original];
+console.log(copia);
+
+
+// Concatena arrays -> Mas eficiente que concat()
+let arr1 = [1, 2];
+let arr2 = [3, 4];
+let combinado = [...arr1, ...arr2];
+console.log(combinado);
+
+// Uso con otros iterables -> En este caso hace lo mismo que el metodo split() de los strings
+let str = "Holis";
+let caracteres = [...str];
+console.log(caracteres);
+
+// Copiamos objetos
+let obj1 = {a: 1, b: 2};
+let obj2 = {...obj1};
+console.log(obj2);
+
+// Combinacion de objetos -> Propiedades posteriores sobreescriben las anteriores
+let defaults = {theme: "dark", fontSize: 14};
+let userSettings = {fontSize: 16};
+let finalConfig = {...defaults, ...userSettings};
+console.log(finalConfig);
+
+// Spread operator en funciones
+function sum(a, b, c) {
+    return a +  b + c;
+}
+
+let numbers = [1, 2, 3];
+console.log(
+    sum(...numbers)
+);
+
+// Recoger argumentos restantes (rest parameters)
+function logArgs(primero, ...resto) {
+    console.log(primero);
+    console.log(resto);
+}
+
+logArgs("a", "b", "c");
+
+
+
+///////////////
+// Closures //
+/*
+Una closure es una funcion que recuerda el entorno (scope) en el que fue creada, incluso despues de que ese entorno haya finalizado su ejecucion.
+
+Esto significa que una funcion interna puede acceder a variables de su funcion externa incluso despues de que esta terminara de ejecutarse.
+
+Técnicamente lo que está pasando es que cada vez que creamos una función DENTRO de otra función, se crea una closure. La función interna captura las variables de su entorno externo y mantiene una referencia a ellas.
+
+En el siguiente ejemplo
+    1. crearContador() retorna una funcion interna anonima
+    2. Esta funcion recuerda la variable contador aunque crearContador() ya termino su ejecución
+    3. Cada vez que llamamos a contar(), estamos invocando la misma closure que MANTIENE SU PROPIO ESTADO INTERNO
+
+*/
+
+function crearContador() {
+    let contador = 0;
+
+    return function() {
+        contador++;
+        return contador;
+    }
+}
+
+let contar = crearContador();
+
+console.log(contar()); // 1
+console.log(contar()); // 2
+console.log(contar()); // 3
+console.log(contar()); // 4
+
+
+// Una closure ocurre cuando una funcion interna accede a variables de su funcion externa incluso despues de que la funcion externa terminara de ejecutarse
+// Las closures nos permiten recordar valores, crear funciones privadas y hacer codigo mas limpio y modular
+
+
+/////////////////////////
+// Funciones anidadas //
+/*
+Las funciones anidadas son simplemente funciones definidas dentro de otra funcion.
+
+Es una funcion que
+    - Se declara dentro de otra funcion
+    - Tiene acceso a todas las variables y parametros de su funcion externa
+    - Puede ser utilizada para organizar mejor el codigo, modularizar la logica o crear closures
+
+
+Las funciones anidadas nos sirven para modularizar, para privacidad, para closures y para hacer una logica auxiliar interna
+*/
+
+function saludarAnidado(nombre) {
+
+    // construirMensaje() esta anidada dentro de saludar()
+    function construirMensaje() {
+        // Tiene acceso a nombre, aunque esa variable no se definiera adentro de esta funcion, gracias al scope lexico de javascript
+        return `Hola, ${nombre}`;
+    }
+
+    return construirMensaje();
+}
+
+console.log(saludarAnidado("Lucas"));
+
+
+
+// Usos comunes de funciones anidadas
+
+// Organizacion del codigo
+// Vamos a definir sub-funciones internas para modularizar la logica
+
+function procesarTexto(texto) {
+    
+    function limpiar(t) {
+        return t.trim().toLowerCase();
+    }
+
+    function contarPalabras(t) {
+        return t.split(/\s+/).length;
+    }
+
+    let limpio = limpiar(texto);
+    return contarPalabras(limpio);
+}
+
+
+let textoPrueba = "     La 334 es la comision con mas aguante, che!  ";
+console.log(procesarTexto(textoPrueba));
+
+
+// Ojo a no usar demasiadas funciones anidads porque pueden dificultar la legibilidad si no estan bien organizadas
+
+
+// TODO, callbacks y Web APIs
