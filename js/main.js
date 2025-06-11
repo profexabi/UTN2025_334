@@ -215,5 +215,154 @@ async function cargarUsuarios() {
 }
 
 
-// TODO, falta repasar async/await y manejo de errores con try/catch
-// Luego saltar a Node.js
+//////////////////
+// async-await //
+/*
+Es azucar sintactico (sintaxis sugar) es una manera de hacer el codigo o la sintaxis mas legible y comprensible.
+Esta nueva y simplificada sintaxis nos permite escribir codigo asincrono con una sintaxis similar al codigo sincrono
+
+El objetivo es hacer el manejo de la asincronia mas legible, estructurado y facil de entender y depurar
+
+Entre las ventajas del async/await
+    - Mas legible y secuencial
+    - Mejor manejo de errores con try/catch
+    - Ideal para flujos largos y complejos de asincronia
+
+
+Cuando usamos await:
+    1. JavaScript evalua la expresion que devuelve una promesa
+
+    2. SUSPENDE la ejecucion de la funcion hasta que la promesa se resuelva o rechace
+
+    3. Si se resuelve, se continua con el valor
+
+    4. Si se rechaza, lanza un error que puede ser atrapado por try...catch
+
+
+Resumen
+    - async: declara una funcion asincrona que devuelve una promesa
+    - await: pausa la funcion hasta que la promesa se resuelva
+    - try/catch: maneja errores de promesas rechazadas
+
+    Ventajas: Codigo mas limpio, legible y facil de depurar
+*/
+
+async function saludar() {
+    return "Holis"
+}
+
+// Aunque saludar devuelve un string, en realidad, devuelve una Promise que se resuelve con este valor
+saludar()
+    .then(console.log)
+
+// La palabra clave await pausa la ejecucion de la funcion async hasta que una Promesa sea resuelta (fulfilled) o rechazada (rejected)
+
+// Ejemplo de encadenamiento (mas facil de interpretar con async/await)
+async function flujoSecuencial() {
+    let usuario = await obtenerUsuario();
+
+    let posts = await obtenerPosts(usuario.id);
+
+    let comentarios = await obtenerComentarios(posts[0].id);
+
+    console.log(comentarios);
+}
+
+
+//////////////////
+// try...catch //
+/*
+try...catch es una estructura de control utilizada para capturar y manejar errores que ocurren durante la ejecucion de bloques de codigo. Esta tecnica forma parte del manejo de excepciones en JavaScript
+
+Su objetivo es evitar que errores inesperados detengan la ejecucion del programa y en su lugar permitir manejar dichos errores de forma controlada
+*/
+
+try {
+    // Codigo que podria fallar
+
+} catch (error) {
+    // Manejar el error
+
+} finally { // OPCIONAL -> Esto se ejecuta siempre, haya o no haya error
+    // Codigo quie se ejecuta siempre
+}
+
+
+// Ejemplo basico
+try {
+    let resultado = 10 / 0;
+    console.log(resultado);
+    throw new Error("Error personalizado");
+
+} catch (error) {
+    console.log("Ocurrio un error:", error.message);
+
+} finally {
+    console.log("Esto se ejecuta siempre");
+}
+
+/* try...catch captura errores de tiempo de ejecucion (runtime)
+    - Acceso a variables no definidas
+    - Llamadas a funciones inexistentes
+    - Errores lanzados con throw
+    - Problemas en funciones JSON.parse()
+
+
+Internamente
+
+    1. El bloque try se ejecuta normalmente
+
+    2. Si ocurre un error dentro del try, se detiene inmediatamente la ejecucion y pasa al bloque catch
+
+    3. El objeto de error (se puede llamar por convencion: "error", "err", "e") contiene informacion como:
+        .name       tipo de error(TypeError, ReferenceError)
+        .message    mensaje descriptivo
+
+    4. El bloque finally, si existe, siempre se ejecuta (ocurra o no un error)
+*/
+
+
+// throw: lanzando errores manualmente
+// Podemos lanzar nuestros propios errores con throw, para validaciones o control de flujo
+function dividir(a, b) {
+    if (b === 0) {
+        throw new Error("No se puede dividir entre cero");
+    }
+    return a / b
+}
+
+try {
+    console.log(dividir(10, 0));
+
+} catch(err) {
+    console.error("Error:", err.message);
+}
+
+
+/*
+Por que no usar try...catch en exceso?
+    - Puede ocultar errores reales si no se maneja correctamente
+
+    - Tiene un coste de rendimineto, especialmente en bucles
+
+    - Es mejor usarlo en secciones donde hay riesgo real de error (operaciones de red)
+
+
+Buenas practicas en el manejo de errores:
+    - No atrapar errores que no podemos manejar
+
+    - usar try...catch solo donde esperamos errores (parseando datos o haciendo llamadas a APIs)
+
+    - Usar finally para cerrar recursos, limpiar o terminar tareas (conexiones, indicadores de carga, ble)
+
+    - Siempre proporcionar informacion util en el error (e.message)'
+
+
+Resumen
+    - try: ejecuta codigo que puede lanzar errores
+    - catch: captura y maneja el error
+    - finally: codigo que se ejecuta siempre, con o sin error
+    - throw: lanza errores manualmente
+    - error: objeto con informacion del error
+    - uso ideal: llamadas a red, parsing, validacion, async/await
+*/
