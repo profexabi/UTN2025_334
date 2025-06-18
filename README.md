@@ -3,6 +3,10 @@ Repositorio de la TUP UTN 2025, Comision 334
 
 ---
 
+## [Clase BBDD con Gabi](https://www.youtube.com/watch?v=I3JBrvwuvW0)
+
+---
+
 ## [Node.js](https://youtu.be/MxW5lQwNYxw)
 ```js
 //////////////
