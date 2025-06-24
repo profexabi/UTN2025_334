@@ -3,6 +3,15 @@ Repositorio de la TUP UTN 2025, Comision 334
 
 ---
 
+## [Clase Express II](https://youtu.be/p6yIpV3wnXQ)
+- Iniciando proyecto Express.js
+- Trabajando con variables de entorno y mysql2
+- Creando endpoints para GET y GET by id
+- Haciendo solicitudes a esos endpoints desde el cliente
+
+
+---
+
 ## [Clase BBDD con Gabi](https://www.youtube.com/watch?v=I3JBrvwuvW0)
 
 ---
