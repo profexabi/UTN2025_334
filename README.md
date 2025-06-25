@@ -1,6 +1,9 @@
 # UTN2025_334 :books:
 Repositorio de la TUP UTN 2025, Comision 334
 
+## [Clase Express III](https://youtu.be/NJLbueyogLA)
+- Terminadas operaciones CRUD
+
 ---
 
 ## [Clase Express II](https://youtu.be/p6yIpV3wnXQ)
