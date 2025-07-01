@@ -8,9 +8,14 @@
     <!-- Preset CSS -->
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.css'>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header>
+        <div id="logo-nav">
+            <img class="img-logo" src="assets/img/logo.png" alt="Logo Burga 334">
+            <p class="p-logo">Las hamburguesas con mas aguante de zona sur</p>
+        </div>
         <ul id="listado-nav">
             <a href="index.html">
                 <li class="links-header"><span>GET</span></li>
@@ -30,7 +35,7 @@
                 <li class="links-header"><span>DELETE</span></li>
             </a>
         </ul>
-
+    </header>
         <hr>
         <h1>Listado de productos</h1>
         <hr>
@@ -50,12 +55,13 @@
 
         <!-- Por tema legibilidad, incorporamos aca el JavaScript -->
         <script>
+            const url = "http://localhost:3000/api";
 
             async function obtenerDatosProductos() {
                 try {
 
                     // Esperamos la respuesta (en JSON) de la peticion fetch
-                    let respuesta = await fetch("http://localhost:3000/products");
+                    let respuesta = await fetch(`${url}/products`);
 
                     // Transformamos la respuesta a objetos JS
                     let datos = await respuesta.json();
@@ -91,6 +97,5 @@
 
             obtenerDatosProductos();
         </script>
-</header>
 </body>
 </html>

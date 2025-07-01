@@ -1,6 +1,14 @@
 # UTN2025_334 :books:
 Repositorio de la TUP UTN 2025, Comision 334
 
+
+## [Clase Express IV](https://youtu.be/n4XuZitAgm8)
+- Modularizadas rutas con Router
+- Desacoplados Middlewares
+- Aplicado Patron MVC (Modelo, Vista, Controlador)
+
+---
+
 ## [Clase Express III](https://youtu.be/NJLbueyogLA)
 - Terminadas operaciones CRUD
 
