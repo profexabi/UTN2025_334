@@ -3,12 +3,23 @@
 import express from "express";
 import environments from "./src/api/config/environments.js";
 import cors from "cors";
-import { productRoutes } from "./src/api/routes/index.js";
+import { productRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { loggerUrl } from "./src/api/middlewares/middlewares.js";
+import { __dirname, join } from "./src/api/utils/index.js";
 
 
 const app = express();
 const PORT = environments.port;
+
+
+// Configuramos EJS como motor de plantillas
+app.set("view engine", "ejs");
+
+// Le indicamos a la aplicacion desde que ruta va a servir vistas desde raizProyecto/src/views
+app.set("views", join(__dirname, "src/views"));
+
+// Middleware para servir archivos estaticos
+app.use(express.static(join(__dirname, "src/public")));
 
 
 //////////////////
@@ -27,11 +38,12 @@ app.use(loggerUrl);
 
 ////////////
 // Rutas //
-app.get("/", (req, res) => {
-    res.send("Hola mundo");
-});
 
+// Rutas de productos de nuestra API Rest
 app.use("/api/products", productRoutes);
+
+// Rutas de las vistas EJS
+app.use("/dashboard", viewRoutes);
 
 
 app.listen(PORT, () => {

@@ -36,5 +36,5 @@ router.delete("/:id", removeProduct);
 
 
 
-// Exportamos las rutas
+// Exportamos las rutas de los productos
 export default router;
