@@ -1,6 +1,14 @@
 # UTN2025_334 :books:
 Repositorio de la TUP UTN 2025, Comision 334
 
+## [Clase Express V](https://youtu.be/DUknpsQ9bnA)
+- Configuracion para trabajar con archivos y rutas en Express
+- Setup para servir archivos estáticos `src/public` y vistas `src/views`
+- Setup de EJS y creacion de plantillas del Dashboard para hacer operaciones CRUD (Create, Read, Update, Delete)
+- Creadas rutas y controladores para las vistas
+- Generación de tickets desde el cliente con la biblioteca [jsPDF](https://github.com/parallax/jsPDF)
+
+---
 
 ## [Clase Express IV](https://youtu.be/n4XuZitAgm8)
 - Modularizadas rutas con Router
